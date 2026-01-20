@@ -2,7 +2,7 @@
 
 ### About:
 In this repository, I hope you can find some useful and helpful scripts that work for you.
-In every script I will try to do a enviroment check and install the missing components if your environment is missing. Homebrew is the main source of all packages.
+In every script, I will try to do a enviroment check and install the missing components which the workflow requires. Homebrew is the main source of all packages.
 You can go take a look at the script and the README files to see which packages will be used in the script.
 I have tested all the scripts before committing to GitHub. If you find a bug or have any suggestions, feel free to submit a full request, issue or even comment in the YouTube video. Thanks!
 
