@@ -1,4 +1,4 @@
-# Mac Workflow Share 
+# MacOS Workflow Share 
 
 ### About:
 In this repository, I hope you can find some useful and helpful scripts that work for you.
