@@ -6,6 +6,9 @@
 * You can go take a look at the script and the README files to see which packages will be used in the script.
 * I have tested all the scripts before committing to GitHub. If you find a bug or have any suggestions, feel free to submit a full request, issue or even comment in the YouTube video. Thanks!
 
+### Install:
+Download the script and move it to /Users/{your account username}/Library/Services/
+
 ### Support:
 <p>
   <a href="https://www.paypal.com/donate/?business=DSGRC8R2AH6SQ&no_recurring=0&item_name=A+coffee+goes+a+long+way+%E2%98%95+Thank+you+for+your+support%21&currency_code=CAD">
