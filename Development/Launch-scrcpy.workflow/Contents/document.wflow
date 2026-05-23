@@ -69,31 +69,68 @@
 # 
 ############################################################ 
 
-#!/bin/bash
+############################################
+# 0. PATH FIX (IMPORTANT)
+############################################
+
+export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
 
 ############################################
 # 1. Dependency Check
 ############################################
 
-install_dep () {
+check_dep () {
 
-osascript -e "display dialog \"$1 is not installed.\n\nInstall using Homebrew?\" buttons {\"Cancel\",\"Install\"} default button \"Install\""
+APP_NAME="$1"
+BREW_NAME="$2"
+
+if ! command -v "$APP_NAME" &gt;/dev/null 2&gt;&amp;1; then
+
+CHOICE=$(osascript &lt;&lt;EOF
+button returned of (display dialog "$APP_NAME is not installed.
+
+Choose an option:" buttons {"Cancel","Continue","Install"} default button "Install")
+EOF
+)
+
+############################################
+# Cancel
+############################################
+
+if [[ "$CHOICE" == "Cancel" ]]; then
+exit 1
+fi
+
+############################################
+# Continue without install
+############################################
+
+if [[ "$CHOICE" == "Continue" ]]; then
+return
+fi
+
+############################################
+# Install
+############################################
+
+if [[ "$CHOICE" == "Install" ]]; then
 
 if ! command -v brew &gt;/dev/null 2&gt;&amp;1; then
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-brew install "$1"
+brew install "$BREW_NAME"
+fi
+
+fi
 }
 
-if ! command -v scrcpy &gt;/dev/null 2&gt;&amp;1; then
-install_dep scrcpy
-fi
+############################################
+# Run Dependency Checks
+############################################
 
-if ! command -v adb &gt;/dev/null 2&gt;&amp;1; then
-install_dep android-platform-tools
-fi
-
+check_dep scrcpy scrcpy
+check_dep adb android-platform-tools
 
 ############################################
 # 2. Get Device List
@@ -101,13 +138,12 @@ fi
 
 DEVICE_LIST=$(adb devices | grep -w "device" | awk '{print $1}')
 
-COUNT=$(echo "$DEVICE_LIST" | wc -l | tr -d " ")
+COUNT=$(echo "$DEVICE_LIST" | sed '/^\s*$/d' | wc -l | tr -d " ")
 
 if [[ $COUNT -eq 0 ]]; then
 osascript -e 'display dialog "No Android devices detected.\n\nEnable USB debugging." buttons {"OK"}'
 exit 1
 fi
-
 
 ############################################
 # 3. If ONE device
@@ -115,13 +151,12 @@ fi
 
 if [[ $COUNT -eq 1 ]]; then
 
-DEVICE="$DEVICE_LIST"
+DEVICE=$(echo "$DEVICE_LIST" | head -n 1)
 
 scrcpy -s "$DEVICE"
 
 exit 0
 fi
-
 
 ############################################
 # 4. Multiple devices → dropdown
@@ -129,9 +164,10 @@ fi
 
 LIST_ITEMS=""
 while read -r D; do
-LIST_ITEMS="$LIST_ITEMS \"$D\""
+LIST_ITEMS="$LIST_ITEMS \"$D\","
 done &lt;&lt;&lt; "$DEVICE_LIST"
 
+LIST_ITEMS="${LIST_ITEMS%,}"
 
 CHOICE=$(osascript &lt;&lt;EOF
 choose from list {${LIST_ITEMS}} with prompt "Select device for scrcpy:" OK button name "Connect" cancel button name "Cancel"
@@ -141,7 +177,6 @@ EOF
 [[ "$CHOICE" == "false" ]] &amp;&amp; exit 0
 
 CHOICE=$(echo "$CHOICE" | sed 's/,//g')
-
 
 ############################################
 # 5. Launch scrcpy
@@ -260,7 +295,7 @@ scrcpy -s "$CHOICE"</string>
 				<key>isViewVisible</key>
 				<integer>1</integer>
 				<key>location</key>
-				<string>289.000000:799.000000</string>
+				<string>769.000000:622.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
