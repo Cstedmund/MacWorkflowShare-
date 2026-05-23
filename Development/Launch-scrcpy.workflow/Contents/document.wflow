@@ -61,7 +61,7 @@
 					<key>COMMAND_STRING</key>
 					<string>############################################################ 
 # Author:      Edmund Tse
-# Date:        05 Mar 2026
+# Date:        23 Mar 2026
 # Version:     0.1
 # 
 # Description: 
@@ -70,7 +70,7 @@
 ############################################################ 
 
 ############################################
-# 0. PATH FIX (IMPORTANT)
+# 0. PATH
 ############################################
 
 export PATH="/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
@@ -295,7 +295,7 @@ scrcpy -s "$CHOICE"</string>
 				<key>isViewVisible</key>
 				<integer>1</integer>
 				<key>location</key>
-				<string>769.000000:622.000000</string>
+				<string>761.500000:846.000000</string>
 				<key>nibPath</key>
 				<string>/System/Library/Automator/Run Shell Script.action/Contents/Resources/Base.lproj/main.nib</string>
 			</dict>
